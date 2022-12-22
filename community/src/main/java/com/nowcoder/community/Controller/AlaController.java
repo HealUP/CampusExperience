@@ -132,6 +132,12 @@ public class AlaController {
         emp.put("age",27);
         emp.put("salary",20100.00);
         list.add(emp);
+
+        emp = new HashMap<>();
+        emp.put("name","dgr");
+        emp.put("age",45);
+        emp.put("salary",20100.00);
+        list.add(emp);
         return list;
     }
 
