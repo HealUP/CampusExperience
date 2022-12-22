@@ -1,6 +1,5 @@
-package com.nowcoder.community.Config;
+package com.nowcoder.community.config;
 
-import org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
