@@ -1,6 +1,8 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.mapper.DiscussPostMapper;
 import com.nowcoder.community.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)
 public class MapperTests {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    DiscussPostMapper discussPostMapper;
     @Test
     public void testInsertUser() {
         User user = new User();
@@ -59,4 +64,46 @@ public class MapperTests {
 
     }
 
+    /**
+    * Description: 测试DiscussPostMapper接口
+    * date: 2022/12/23 13:01
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    @Test
+    public void  testSelectPosts(){
+        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(2, 0, 11);
+        for (DiscussPost discussPost : discussPosts) {
+            System.out.println(discussPost);
+        }
+        int rows = discussPostMapper.selectDiscussPostRows(2);
+        System.out.println(rows);
+
+    }
+
+    //添加帖子
+    @Test
+    public void insertPosts(){
+        int count =100;
+        int score =50;
+        int addCount = 0;
+        for (int i = 20; i < 30; i++) {
+            DiscussPost discussPost = new DiscussPost();
+            discussPost.setContent("如何干掉牛客网"+i);
+            discussPost.setCommentCount(count--);
+            discussPost.setScore(score--);
+            discussPost.setStatus(2);
+            discussPost.setType(1);
+            discussPost.setTitle("掌握牛客网的黑客攻防术"+i);
+            discussPost.setUserId(4);
+            discussPost.setCreateTime(new Date());
+            discussPostMapper.insertDiscussPosts(discussPost);
+            addCount ++;
+        }
+        System.out.println(addCount);
+
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.nowcoder.community.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.nowcoder.community.entity.DiscussPost;
 import org.apache.ibatis.annotations.Mapper;
 import com.nowcoder.community.entity.User;
 
@@ -12,7 +14,7 @@ import com.nowcoder.community.entity.User;
 */
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper  {
     User selectById(int id);
 
     User selectByName(String username);

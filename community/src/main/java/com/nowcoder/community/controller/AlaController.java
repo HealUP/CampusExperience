@@ -1,5 +1,7 @@
 package com.nowcoder.community.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.*;
 * @since JDK 1.8
 */
 @Controller
+@ApiOperation("测试的接口")
 @RequestMapping("/alpha")
 public class AlaController {
     @RequestMapping("/hello")
