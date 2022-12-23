@@ -40,11 +40,11 @@
     </update>
 
     <update id="updateHeader">
-        update user set status = #{headerUrl} where id = #{id}
+        update user set header_url = #{headerUrl} where id = #{id}
     </update>
 
     <update id="updatePassword">
-        update user set status = #{password} where id = #{id}
+        update user set password = #{password} where id = #{id}
     </update>
 
 

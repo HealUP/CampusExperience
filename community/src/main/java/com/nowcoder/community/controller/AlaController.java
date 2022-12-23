@@ -77,7 +77,7 @@ public class AlaController {
         return "sucess";
     }
     //2 响应HTML数据 两种方式
-    @RequestMapping(path = "teacher",method = RequestMethod.GET)
+    @RequestMapping(path = "/teacher",method = RequestMethod.GET)
     public ModelAndView getTeacher(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("name","牛客");
