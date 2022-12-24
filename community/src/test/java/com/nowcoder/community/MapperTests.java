@@ -22,11 +22,11 @@ public class MapperTests {
     @Test
     public void testInsertUser() {
         User user = new User();
-        user.setUsername("小邓");
+        user.setUsername("小hao");
         user.setPassword("a123456");
         user.setSalt("abc");
         user.setEmail("test1@qq.com");
-        user.setHeaderUrl("http://www.nowcoder.com/103.png");
+        user.setHeaderUrl("http://www.nowcoder.com/106.png");
         user.setCreateTime(new Date());
 
         int rows = userMapper.insertUser(user);
