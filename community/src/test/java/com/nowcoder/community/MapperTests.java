@@ -1,9 +1,12 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.mapper.DiscussPostMapper;
+import com.nowcoder.community.mapper.LoginTicketMapper;
 import com.nowcoder.community.mapper.UserMapper;
+import com.nowcoder.community.util.CommunityUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,12 +16,15 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
-@ContextConfiguration(classes = CommunityApplication.class)
+//@ContextConfiguration(classes = CommunityApplication.class)
 public class MapperTests {
     @Autowired
     UserMapper userMapper;
     @Autowired
     DiscussPostMapper discussPostMapper;
+    @Autowired
+    LoginTicketMapper loginTicketMapper;
+
     @Test
     public void testInsertUser() {
         User user = new User();
@@ -103,7 +109,25 @@ public class MapperTests {
             addCount ++;
         }
         System.out.println(addCount);
+    }
+
+    /**
+    * Description: 测试LoginTicketMapper
+    * date: 2022/12/26 21:16
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    @Test
+    public void testLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(9);
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date());
+        loginTicket.setTicket("cc");
+        loginTicketMapper.insertLoginTicket(loginTicket);
 
 
+        loginTicketMapper.updateStatus("aa",1);
     }
 }
