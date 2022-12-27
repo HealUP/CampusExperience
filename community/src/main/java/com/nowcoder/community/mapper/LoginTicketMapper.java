@@ -28,5 +28,5 @@ public interface LoginTicketMapper {
 //            "</if>",
 //            "<script>"
 //    })
-    int updateStatus(String ticket, int status);//根据状态修改凭证
+    int updateStatus(String ticket, int status);//根据凭证修改状态
 }

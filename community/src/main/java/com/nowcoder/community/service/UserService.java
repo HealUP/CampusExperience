@@ -1,5 +1,6 @@
 package com.nowcoder.community.service;
 
+import cn.hutool.log.Log;
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.mapper.LoginTicketMapper;
@@ -194,5 +195,16 @@ public class UserService implements CommunityConstant {
 
     public void logout(String ticket) {
         loginTicketMapper.updateStatus(ticket,1);
+    }
+    
+    /**
+    * Description: 根据ticket找到登录凭证LoginTicket
+    * date: 2022/12/27 17:03
+     * 
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.selectByTicket(ticket);
     }
 }

@@ -136,7 +136,7 @@ public class LoginController implements CommunityConstant {
         String kaptchaOwner = CommunityUtil.generateUUID();
         Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
         cookie.setMaxAge(60);
-        cookie.setPath(contextPath);
+        cookie.setPath(contextPath);//生效路径
         response.addCookie(cookie);
 
         // 将图片输出给浏览器
