@@ -207,4 +207,16 @@ public class UserService implements CommunityConstant {
     public LoginTicket findLoginTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
     }
+
+    /**
+    * Description: 更新头像地址
+    * date: 2022/12/29 20:56
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public int updateHeader (int userId, String headerUrl) {
+        return  userMapper.updateHeader(userId,headerUrl);
+
+    }
 }
