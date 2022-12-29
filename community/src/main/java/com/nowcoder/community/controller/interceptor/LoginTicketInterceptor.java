@@ -31,11 +31,11 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     //controller 之前执行
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        log.info("进拦截器了");
+        log.debug("进拦截器了");
         // 从cookie中获取凭证
         String ticket = CookieUtil.getValue(request, "ticket");
 
-        log.info(ticket);
+        log.debug(ticket);
 
         if (ticket != null) {
             // 查询凭证

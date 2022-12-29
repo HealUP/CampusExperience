@@ -84,7 +84,7 @@ public class UserService implements CommunityConstant {
         //验证邮箱
         u = userMapper.selectByEmail(user.getEmail());
         if (u != null){
-            map.put("emainMsg","该邮箱已被注册!");
+            map.put("emailMsg","该邮箱已被注册!");
             return map;
         }
 
