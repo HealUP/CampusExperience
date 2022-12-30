@@ -9,8 +9,7 @@
     <select id="selectByTicket" resultType="LoginTicket">
         select id, user_id,ticket,status,expired
         from login_ticket
-        where ticket =#{ticket}
-
+        where ticket=#{ticket}
     </select>
 
     <update id="updateStatus">

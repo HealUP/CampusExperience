@@ -1,6 +1,5 @@
 package com.nowcoder.community.service;
 
-import cn.hutool.log.Log;
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.mapper.LoginTicketMapper;
@@ -38,6 +37,7 @@ public class UserService implements CommunityConstant {
 
     @Autowired
     private TemplateEngine templateEngine;
+
     @Value("${community.path.domain}")
     private String domain;
 
@@ -194,7 +194,7 @@ public class UserService implements CommunityConstant {
     */
 
     public void logout(String ticket) {
-        loginTicketMapper.updateStatus(ticket,1);
+        loginTicketMapper.updateStatus(ticket,1);//根据ticket，将状态改为失效 1
     }
     
     /**
@@ -215,8 +215,75 @@ public class UserService implements CommunityConstant {
     * @since JDK 1.8
     */
 
-    public int updateHeader (int userId, String headerUrl) {
-        return  userMapper.updateHeader(userId,headerUrl);
+    public void updateHeader (int userId, String headerUrl) {
+        userMapper.updateHeader(userId, headerUrl);
 
     }
+
+    /**
+    * Description: 修改密码方法
+    * date: 2022/12/30 18:29
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    // 重置密码
+    public Map<String, Object> resetPassword(String email, String password) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 空值处理
+        if (StringUtils.isBlank(email)) {
+            map.put("emailMsg", "邮箱不能为空!");
+            return map;
+        }
+        if (StringUtils.isBlank(password)) {
+            map.put("passwordMsg", "密码不能为空!");
+            return map;
+        }
+
+        // 验证邮箱
+        User user = userMapper.selectByEmail(email);
+        if (user == null) {
+            map.put("emailMsg", "该邮箱尚未注册!");
+            return map;
+        }
+
+        // 重置密码
+        password = CommunityUtil.md5(password + user.getSalt());
+        userMapper.updatePassword(user.getId(), password);
+
+        map.put("user", user);
+        return map;
+    }
+
+    // 修改密码
+    public Map<String, Object> updatePassword(int userId, String oldPassword, String newPassword) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 空值处理
+        if (StringUtils.isBlank(oldPassword)) {
+            map.put("oldPasswordMsg", "原密码不能为空!");
+            return map;
+        }
+        if (StringUtils.isBlank(newPassword)) {
+            map.put("newPasswordMsg", "新密码不能为空!");
+            return map;
+        }
+
+        // 验证原始密码
+        User user = userMapper.selectById(userId);
+        oldPassword = CommunityUtil.md5(oldPassword + user.getSalt());
+        if (!user.getPassword().equals(oldPassword)) {
+            map.put("oldPasswordMsg", "原密码输入有误!");
+            return map;
+        }
+
+        // 更新密码
+        newPassword = CommunityUtil.md5(newPassword + user.getSalt());
+        userMapper.updatePassword(userId, newPassword);
+
+        return map;
+    }
+
 }

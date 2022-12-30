@@ -45,7 +45,9 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
                 // 根据凭证查询用户
                 User user = userService.findUserById(loginTicket.getUserId());
                 // 在本次请求中持有用户
+                log.debug("本次登录用户信息为{}",user);
                 hostHolder.setUser(user);
+
 //                // 构建用户认证的结果,并存入SecurityContext,以便于Security进行授权.
 //                Authentication authentication = new UsernamePasswordAuthenticationToken(
 //                        user, user.getPassword(), userService.getAuthorities(user.getId()));

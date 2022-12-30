@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.UserService;
 import com.nowcoder.community.util.CommunityConstant;
@@ -19,6 +20,7 @@ import springfox.documentation.schema.ModelRef;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -40,14 +42,15 @@ public class UserController implements CommunityConstant {
     @Autowired
     private HostHolder hostHolder;
 
+    @LoginRequired
     @RequestMapping(path = "/setting",method = RequestMethod.GET)
     public String getSettingPage( Model model) {
 
         return "/site/setting";
     }
 
-
     //上传图片
+    @LoginRequired
     @RequestMapping(path = "/upload",method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage,Model model) {
         //没选择图片
@@ -58,7 +61,7 @@ public class UserController implements CommunityConstant {
 
         String fileName = headerImage.getOriginalFilename();//获取文件的名字
         // 判断后缀
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1);//从文件名的最后一个.来取
+        String suffix = fileName.substring(fileName.lastIndexOf("."));//从文件名的最后一个.来取
         if (StringUtils.isBlank(suffix)) {
             model.addAttribute("error","文件格式不正确！");
             return "/site/setting";
@@ -76,13 +79,15 @@ public class UserController implements CommunityConstant {
             throw new RuntimeException("上传文件失败，服务器发生异常！",e);
         }
 
-        log.info("开始获取当前用户id");//bug在这!
+        log.info("开始获取当前用户id");//bug在这! 这里的bug只能修改一次头像，下次就报空指针，改了拦截器里的模板引擎后执行的地方
         // http://localhost:8080/community/user/header/xxx.png
         User user = hostHolder.getUser();//从hostHolder获取到当前用户
-        log.debug("当前用户id和头像地址为{}",user.getId());
+        System.out.println(hostHolder.getUser().getId());
+
+
 
         //拼接路径
-        String headerUrl = domain + contextPath + "user/header/" + fileName;
+        String headerUrl = domain + contextPath + "/user/header/" + fileName;
         //根据用户id更新头像地址
         userService.updateHeader(user.getId(),headerUrl);
         return "redirect:/index";
@@ -95,7 +100,7 @@ public class UserController implements CommunityConstant {
         //解析出服务器存放路径
         fileName = uploadPath + "/" + fileName;
         //文件后缀
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+        String suffix = fileName.substring(fileName.lastIndexOf("."));
         //响应图片
         response.setContentType("/image"+suffix);
         try (//放在这里会自动关闭
@@ -109,6 +114,27 @@ public class UserController implements CommunityConstant {
             }
         } catch (IOException e) {
             log.error("读取头像失败: " + e.getMessage());
+        }
+    }
+
+    /**
+    * Description: 修改密码
+    * date: 2022/12/30 18:27
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    // 修改密码
+    @RequestMapping(path = "/updatePassword", method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, Model model) {
+        User user = hostHolder.getUser();
+        Map<String, Object> map = userService.updatePassword(user.getId(), oldPassword, newPassword);
+        if (map == null || map.isEmpty()) {
+            return "redirect:/logout";
+        } else {
+            model.addAttribute("oldPasswordMsg", map.get("oldPasswordMsg"));
+            model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
+            return "/site/setting";
         }
     }
 

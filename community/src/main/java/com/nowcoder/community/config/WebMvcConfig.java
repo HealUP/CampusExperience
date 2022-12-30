@@ -1,6 +1,8 @@
 package com.nowcoder.community.config;
 
 //import com.nowcoder.community.controller.interceptor.AlphaInterceptor;
+//import com.nowcoder.community.controller.interceptor.AlphaInterceptor;
+import com.nowcoder.community.controller.interceptor.LoginRequiredInterceptor;
 import com.nowcoder.community.controller.interceptor.LoginTicketInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,20 +21,30 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //    @Autowired
 //    private AlphaInterceptor alphaInterceptor;
 
+//    @Autowired
+//    private AlphaInterceptor alphaInterceptor;
+
     @Autowired
     private LoginTicketInterceptor loginTicketInterceptor;
+
+    @Autowired
+    private LoginRequiredInterceptor loginRequiredInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
 //        //测试
 //        registry.addInterceptor(alphaInterceptor)
-//                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg")
-//                .addPathPatterns("/register", "/login");
+//                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
+//
 
         registry.addInterceptor(loginTicketInterceptor)
-                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg")//放行的路径
-                .addPathPatterns("/register","/login");//拦截的路径
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");//放行的路径
+
+
+
+        registry.addInterceptor(loginRequiredInterceptor)
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");//放行的路径
 
 
     }
