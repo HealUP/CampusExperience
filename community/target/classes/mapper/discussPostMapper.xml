@@ -37,4 +37,10 @@
         insert into discuss_post values (#{id}, #{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
     </insert>
 
+    <select id="selectDiscussPostById" resultType="DiscussPost">
+        select id, user_id, title, content, type, status, create_time, comment_count, score
+        from discuss_post
+        where id = #{id}
+    </select>
+
 </mapper>

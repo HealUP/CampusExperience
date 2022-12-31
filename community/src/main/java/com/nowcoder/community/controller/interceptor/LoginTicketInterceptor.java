@@ -35,7 +35,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
         // 从cookie中获取凭证
         String ticket = CookieUtil.getValue(request, "ticket");
 
-        log.debug(ticket);
+        log.debug("用户的ticket是{}",ticket);
 
         if (ticket != null) {
             // 查询凭证

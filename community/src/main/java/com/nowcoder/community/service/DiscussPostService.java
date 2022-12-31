@@ -56,4 +56,16 @@ public class DiscussPostService {
         return discussPostMapper.insertDiscussPosts(post);
 
     }
+
+    /**
+    * Description: 根据id查找帖子
+    * date: 2022/12/31 19:04
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public DiscussPost findDiscussPostById(int id) {
+       return discussPostMapper.selectDiscussPostById(id);
+    }
 }

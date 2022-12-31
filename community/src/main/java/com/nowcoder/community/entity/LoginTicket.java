@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
-* Description: 实体类
+* Description: 登录凭证实体类
 * date: 2022/12/25 18:55
  * 
 * @author: Deng

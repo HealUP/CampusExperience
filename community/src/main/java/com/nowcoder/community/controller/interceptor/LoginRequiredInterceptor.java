@@ -34,7 +34,7 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
             if (loginRequired != null && hostHolder.getUser() == null) {
                 //跳到登录页面 可以先获取当前的路径再拼接login
                 response.sendRedirect(request.getContextPath()+"/login");
-                return true;
+                return false;
             }
         }
         return true;
