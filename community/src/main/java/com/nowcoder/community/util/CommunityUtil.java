@@ -33,7 +33,7 @@ public class CommunityUtil {
     }
 
     public static String getJSONString(int code, String msg, Map<String, Object> map) {
-        JSONObject json = new JSONObject();
+        JSONObject json = new JSONObject();//实例化一个json
         json.put("code", code);
         json.put("msg", msg);
         if (map != null) {
@@ -41,13 +41,13 @@ public class CommunityUtil {
                 json.put(key, map.get(key));
             }
         }
-        return json.toJSONString();
+        return json.toJSONString();//最后再将json转化成json字符串
     }
-
+//重载 1
     public static String getJSONString(int code, String msg) {
         return getJSONString(code, msg, null);
     }
-
+//重载 2
     public static String getJSONString(int code) {
         return getJSONString(code, null, null);
     }

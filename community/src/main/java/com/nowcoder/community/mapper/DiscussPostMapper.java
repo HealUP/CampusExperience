@@ -23,6 +23,8 @@ public interface DiscussPostMapper  {
     //查询有多少条帖子的方法
     int selectDiscussPostRows(@Param("userId") int userId);
 
-    //自己增加的插入数据的方法
+    // 发布帖子
     int insertDiscussPosts(DiscussPost discussPost);
+
+
 }
