@@ -20,6 +20,9 @@ public class CommentService implements CommunityConstant {
     
     @Autowired
     private SensitiveFilter sensitiveFilter;
+
+    @Autowired
+    private DiscussPostService discussPostService;
     
     /**
     * Description: 根据实体找到评论内容 对内容进行分页
@@ -62,7 +65,10 @@ public class CommentService implements CommunityConstant {
         int rows = commentMapper.insertComment(comment);
         
         //更新帖子评论数量
-        
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            int count = commentMapper.selectCountByEntity(comment.getEntityType(), comment.getEntityId());
+            discussPostService.updateCommentCount(comment.getEntityId(), count);
+        }
         //...
         return rows;
     }

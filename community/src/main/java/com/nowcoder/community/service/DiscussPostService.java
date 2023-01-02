@@ -68,4 +68,16 @@ public class DiscussPostService {
     public DiscussPost findDiscussPostById(int id) {
        return discussPostMapper.selectDiscussPostById(id);
     }
+    
+    /**
+    * Description: 更新帖子评论数量
+    * date: 2023/1/2 17:09
+     * 
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public int updateCommentCount(int id, int commentCount) {
+        return discussPostMapper.updateCommentCount(id, commentCount);
+    }
 }
