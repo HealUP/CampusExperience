@@ -14,8 +14,6 @@ import java.util.Date;
 * @since JDK 1.8
 */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Comment {
     private int id;
     private int userId;

@@ -130,4 +130,29 @@ public class MapperTests {
 
         loginTicketMapper.updateStatus("aa",1);
     }
+
+    /**
+    * Description: 测试私信
+    * date: 2023/1/2 19:51
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    @Test
+    public void testSelectLetters() {}
+
+
+    /**
+    * Description: 测试插入私信
+    * date: 2023/1/2 19:52
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    @Test
+    public int testInsertLetters() {
+        return 1;
+    }
+
 }

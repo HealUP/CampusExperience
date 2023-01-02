@@ -286,4 +286,16 @@ public class UserService implements CommunityConstant {
         return map;
     }
 
+    /**
+    * Description: 根据name查找user
+    * date: 2023/1/2 21:20
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public User findUserByName(String username) {
+        return userMapper.selectByName(username);
+    }
+
 }
