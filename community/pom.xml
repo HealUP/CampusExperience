@@ -142,6 +142,12 @@
             <version>2.3.2</version>
         </dependency>
 
+        <!--aop植入-->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.9.7</version>
+            </dependency>
     </dependencies>
 
     <build>

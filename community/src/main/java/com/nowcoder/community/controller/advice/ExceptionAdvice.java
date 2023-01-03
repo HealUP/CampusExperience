@@ -13,6 +13,14 @@ import java.io.PrintWriter;
 
 @Slf4j
 @ControllerAdvice(annotations = Controller.class)
+
+/**
+* Description: 全局异常处理，@Controller注解的都会被捕获
+* date: 2023/1/3 15:37
+ * 
+* @author: Deng
+* @since JDK 1.8
+*/
 //表示该类是Controller的全局配置类
 public class ExceptionAdvice {
     @ExceptionHandler({Exception.class})
