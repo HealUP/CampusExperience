@@ -15,6 +15,7 @@ import java.util.Date;
 */
 @Data
 public class Comment {
+
     private int id;
     private int userId;
     private int entityType;

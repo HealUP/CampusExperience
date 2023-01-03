@@ -4,7 +4,9 @@ import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.DiscussPostService;
+import com.nowcoder.community.service.LikeService;
 import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.util.CommunityConstant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +29,17 @@ import java.util.Map;
 * @since JDK 1.8
 */
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
     @Resource
     private DiscussPostService discussPostService;
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private LikeService likeService;
+
+
     @ApiOperation("获取首页内容")
     @RequestMapping(path = "/index",method = RequestMethod.GET)
     public String getIndexPage(@ApiParam("视图") Model  model, Page page) {
@@ -53,6 +60,10 @@ public class HomeController {
                 //根据帖子去找用户 从帖子里面post 获得用户的id
                 User user = userService.findUserById(post.getUserId());
                 map.put("user",user);
+
+                //点赞数量
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
                 discussPosts.add(map);//把map一个个丢进list集合
             }
         }

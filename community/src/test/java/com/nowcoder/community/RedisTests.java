@@ -126,7 +126,7 @@ public class RedisTests {
     // 编程式事务 redis 支持事务 但是不满足acid特性
     /**
     * Description: redis管理事务时，中间不要做查询 查不到
-    * date: 2023/1/3 16:50
+    * date: 2023/1/3 16:59
      * 
     * @author: Deng
     * @since JDK 1.8

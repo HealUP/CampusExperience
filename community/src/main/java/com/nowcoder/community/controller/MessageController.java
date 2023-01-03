@@ -48,6 +48,7 @@ public class MessageController implements CommunityConstant {
                 Map<String, Object> map = new HashMap<>();
                 map.put("conversation",message);
                 map.put("letterCount",messageService.findLetterCount(message.getConversationId()));
+                map.put("unreadCount", messageService.findLetterUnreadCount(user.getId(), message.getConversationId()));
                 int targetId = user.getId() == message.getFromId() ? message.getToId() : message.getFromId();
                 map.put("target",userService.findUserById(targetId));
 
@@ -56,9 +57,11 @@ public class MessageController implements CommunityConstant {
         }
         model.addAttribute("conversations",conversations);
         //查询未读消息数量
+        //私信未读消息
         int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);
         model.addAttribute("letterUnreadCount", letterUnreadCount);
 
+        //系统通知未读消息
         int noticeUnreadCount = messageService.findNoticeUnreadCount(user.getId(), null);
         model.addAttribute("noticeUnreadCount", noticeUnreadCount);
         return "/site/letter";
