@@ -11,3 +11,4 @@ A community item
 - Elasticsearch 搜索
 - Spring Security 权限管理
 - Spring Actuator 服务监控
+- Thymeleaf 模板
