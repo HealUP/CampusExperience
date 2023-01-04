@@ -28,11 +28,11 @@ public class LikeController implements CommunityConstant {
 
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
-    public String like(int entityType, int entityId) {
+    public String like(int entityType, int entityId,int entityUserId, int postId) {
         User user = hostHolder.getUser();
 
         //点赞
-        likeService.like(user.getId(), entityType, entityId);
+        likeService.like(user.getId(), entityType, entityId, entityUserId);
 
         //数量
         long likeCount = likeService.findEntityLikeCount(entityType, entityId);

@@ -5,7 +5,7 @@ $(function(){
 function follow() {
 	var btn = this;
 	if($(btn).hasClass("btn-info")) {
-		// 关注TA
+		// 关注TA 关注用户
 		$.post(
 		    CONTEXT_PATH + "/follow",
 		    {"entityType":3,"entityId":$(btn).prev().val()},
