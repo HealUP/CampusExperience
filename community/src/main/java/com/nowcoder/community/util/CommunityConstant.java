@@ -79,6 +79,8 @@ public interface CommunityConstant {
     */
     int ENTITY_TYPE_USER = 3;
 
+
+    //kafka常量定义
     /**
      * 主题: 评论
      */

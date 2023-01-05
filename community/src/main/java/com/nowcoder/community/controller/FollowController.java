@@ -1,7 +1,9 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.FollowService;
 import com.nowcoder.community.service.UserService;
 import com.nowcoder.community.util.CommunityConstant;
@@ -30,8 +32,11 @@ public class FollowController implements CommunityConstant {
     @Resource
     private UserService userService;
 
+    @Resource
+    private EventProducer eventProducer;
+
     /**
-    * Description: 关注
+    * Description: 关注  并且触发系统发送提示消息
     * date: 2023/1/4 20:52
      * 
     * @author: Deng
@@ -41,11 +46,18 @@ public class FollowController implements CommunityConstant {
     public String follow(int entityType, int entityId) {
         User user = hostHolder.getUser();
         followService.follow(user.getId(), entityType, entityId);
+        //触发关注事件  没有“点击查看” 链接到谁关注的详情
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityId(entityId)
+                .setEntityType(entityType);
+        eventProducer.fireEvent(event);//生产关注的消息
         return CommunityUtil.getJSONString(0,"已关注！");//异步请求，返回json格式的数据
     }
 
     /**
-    * Description: 取消关注
+    * Description: 取消关注 取消关注就不用发送系统提示消息了
     * date: 2023/1/4 20:52
      * 
     * @author: Deng
@@ -55,9 +67,7 @@ public class FollowController implements CommunityConstant {
     @ResponseBody
     public String unfollow(int entityType, int entityId) {
         User user = hostHolder.getUser();
-
         followService.unfollow(user.getId(), entityType, entityId);
-
         return CommunityUtil.getJSONString(0, "已取消关注!");
     }
 

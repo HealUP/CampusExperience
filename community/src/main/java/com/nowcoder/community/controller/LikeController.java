@@ -1,6 +1,8 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.LikeService;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
@@ -24,6 +26,9 @@ public class LikeController implements CommunityConstant {
     private HostHolder hostHolder;
 
     @Resource
+    private EventProducer eventProducer;
+
+    @Resource
     private RedisTemplate redisTemplate;
 
     @RequestMapping(path = "/like", method = RequestMethod.POST)
@@ -44,17 +49,17 @@ public class LikeController implements CommunityConstant {
         map.put("likeStatus",likeStatus);
 
 
-//        // 触发点赞事件
-//        if (likeStatus == 1) {
-//            Event event = new Event()
-//                    .setTopic(TOPIC_LIKE)
-//                    .setUserId(hostHolder.getUser().getId())
-//                    .setEntityType(entityType)
-//                    .setEntityId(entityId)
-//                    .setEntityUserId(entityUserId)
-//                    .setData("postId", postId);
-//            eventProducer.fireEvent(event);
-//        }
+        // 触发点赞事件
+        if (likeStatus == 1) {
+            Event event = new Event()
+                    .setTopic(TOPIC_LIKE)
+                    .setUserId(hostHolder.getUser().getId())
+                    .setEntityType(entityType)
+                    .setEntityId(entityId)
+                    .setEntityUserId(entityUserId)
+                    .setData("postId", postId);//点击提示的那句话，点击查看，会跳转到详情页面
+            eventProducer.fireEvent(event);//生产消息
+        }
         return CommunityUtil.getJSONString(0, null, map);
     }
 }
