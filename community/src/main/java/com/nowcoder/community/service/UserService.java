@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
 * Description: 实现业务
@@ -54,8 +55,20 @@ public class UserService implements CommunityConstant {
 //    @Autowired
 //    private LoginTicketMapper loginTicketMapper;
 
+    /**
+    * Description: 优先从缓存中取出用户
+    * date: 2023/1/5 15:35
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
     public User findUserById(int id) {
-        return userMapper.selectById(id);
+//        return userMapper.selectById(id);
+        User user = getCache(id);
+        if (user == null) {
+            user = initCache(id);
+        }
+        return user;
     }
 
     public Map<String,Object> register(User user) {
@@ -135,6 +148,9 @@ public class UserService implements CommunityConstant {
         if (user.getStatus() == 1) {
             return ACTIVATION_REPEAT;
         }else if (user.getActivationCode().equals(code)){
+            userMapper.updateStatus(userId, 1);
+            //修改了user,就要把缓存清理掉
+            clearCache(userId);
             return ACTIVATION_SUCCESS;//跟激活码相等，则激活成功
         }else {
             return ACTIVATION_FAILURE;
@@ -232,9 +248,12 @@ public class UserService implements CommunityConstant {
     * @since JDK 1.8
     */
 
-    public void updateHeader (int userId, String headerUrl) {
-        userMapper.updateHeader(userId, headerUrl);
-
+    public int updateHeader (int userId, String headerUrl) {
+        //为了防止更新失败,但是把缓存清理了的情况  干脆先更新,成功了,再清理缓存
+//       return userMapper.updateHeader(userId, headerUrl);
+        int rows = userMapper.updateHeader(userId, headerUrl);
+        clearCache(userId);
+        return rows;
     }
 
     /**
@@ -313,6 +332,34 @@ public class UserService implements CommunityConstant {
 
     public User findUserByName(String username) {
         return userMapper.selectByName(username);
+    }
+    
+    /**
+    * Description: 查询user优先从缓存里面找
+    * date: 2023/1/5 15:28
+     * 找不到时初始化缓存的数据
+     * 当数据发生变化时把缓存删掉
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    // 1.优先从缓存中取值
+    private User getCache(int userId) {
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        return (User) redisTemplate.opsForValue().get(redisKey);
+    }
+
+    // 2.取不到时初始化缓存数据
+    private User initCache(int userId) {
+        User user = userMapper.selectById(userId);
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.opsForValue().set(redisKey, user, 3600, TimeUnit.SECONDS);
+        return user;
+    }
+
+    // 3.数据变更时清除缓存数据
+    private void clearCache(int userId) {
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.delete(redisKey);
     }
 
 }
