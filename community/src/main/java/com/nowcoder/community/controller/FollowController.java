@@ -48,10 +48,11 @@ public class FollowController implements CommunityConstant {
         followService.follow(user.getId(), entityType, entityId);
         //触发关注事件  没有“点击查看” 链接到谁关注的详情
         Event event = new Event()
-                .setTopic(TOPIC_FOLLOW)
+                .setTopic(TOPIC_FOLLOW)//主题为关注
                 .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
                 .setEntityId(entityId)
-                .setEntityType(entityType);
+                .setEntityUserId(entityId);
         eventProducer.fireEvent(event);//生产关注的消息
         return CommunityUtil.getJSONString(0,"已关注！");//异步请求，返回json格式的数据
     }

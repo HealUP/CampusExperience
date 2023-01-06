@@ -4,7 +4,7 @@ import com.nowcoder.community.entity.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
-@Deprecated
+@Deprecated//标记过时  因为登录凭证存到redis中了不需要放到,Mysql数据库了
 public interface LoginTicketMapper {
 
 //    @Insert({

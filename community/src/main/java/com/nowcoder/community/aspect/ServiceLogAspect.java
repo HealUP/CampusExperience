@@ -38,7 +38,7 @@ public class ServiceLogAspect {
     public void before(JoinPoint joinPoint) {
         //拼接格式 用户[1.2.3.4],在[xxx],访问了[com.nowcoder.community.service.xxx()].
         ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
+        if (attributes == null) {//消费者主动去调用的controller，没有request,所以要判断是否为空
             return;
         }
         HttpServletRequest request = attributes.getRequest();

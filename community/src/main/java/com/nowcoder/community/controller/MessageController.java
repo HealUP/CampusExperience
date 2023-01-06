@@ -61,7 +61,7 @@ public class MessageController implements CommunityConstant {
         int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);
         model.addAttribute("letterUnreadCount", letterUnreadCount);
 
-        //系统通知未读消息
+        //系统通知私信未读消息
         int noticeUnreadCount = messageService.findNoticeUnreadCount(user.getId(), null);
         model.addAttribute("noticeUnreadCount", noticeUnreadCount);
         return "/site/letter";
@@ -150,14 +150,23 @@ public class MessageController implements CommunityConstant {
         return CommunityUtil.getJSONString(0);
     }
 
+    /**
+    * Description: 三种通知的查询
+    * date: 2023/1/6 16:04
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
     @RequestMapping(path = "/notice/list", method = RequestMethod.GET)
     public String getNoticeList(Model model) {
         User user = hostHolder.getUser();
 
         // 查询评论类通知
         Message message = messageService.findLatestNotice(user.getId(), TOPIC_COMMENT);
+
         if (message != null) {
             Map<String, Object> messageVO = new HashMap<>();
+            //封装聚合的消息
             messageVO.put("message", message);
 
             String content = HtmlUtils.htmlUnescape(message.getContent());
@@ -168,18 +177,19 @@ public class MessageController implements CommunityConstant {
             messageVO.put("entityId", data.get("entityId"));
             messageVO.put("postId", data.get("postId"));
 
-            int count = messageService.findNoticeCount(user.getId(), TOPIC_COMMENT);
+            int count = messageService.findNoticeCount(user.getId(), TOPIC_COMMENT);//评论类型
             messageVO.put("count", count);
 
-            int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_COMMENT);
+            int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_COMMENT);//评论类型
             messageVO.put("unread", unread);
 
             model.addAttribute("commentNotice", messageVO);
         }
 
         // 查询点赞类通知
-        message = messageService.findLatestNotice(user.getId(), TOPIC_LIKE);
+        message = messageService.findLatestNotice(user.getId(), TOPIC_LIKE);//点赞类型
         if (message != null) {
+            //聚合数据
             Map<String, Object> messageVO = new HashMap<>();
             messageVO.put("message", message);
 
@@ -201,7 +211,7 @@ public class MessageController implements CommunityConstant {
         }
 
         // 查询关注类通知
-        message = messageService.findLatestNotice(user.getId(), TOPIC_FOLLOW);
+        message = messageService.findLatestNotice(user.getId(), TOPIC_FOLLOW);//关注类型
         if (message != null) {
             Map<String, Object> messageVO = new HashMap<>();
             messageVO.put("message", message);
@@ -223,7 +233,7 @@ public class MessageController implements CommunityConstant {
         }
 
         // 查询未读消息数量
-        int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);
+        int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);//私信未读
         model.addAttribute("letterUnreadCount", letterUnreadCount);
         int noticeUnreadCount = messageService.findNoticeUnreadCount(user.getId(), null);
         model.addAttribute("noticeUnreadCount", noticeUnreadCount);
@@ -241,7 +251,7 @@ public class MessageController implements CommunityConstant {
 
         List<Message> noticeList = messageService.findNotices(user.getId(), topic, page.getOffset(), page.getLimit());
         List<Map<String, Object>> noticeVoList = new ArrayList<>();
-        if (noticeList != null) {
+        if (noticeList != null) {//聚合数据
             for (Message notice : noticeList) {
                 Map<String, Object> map = new HashMap<>();
                 // 通知

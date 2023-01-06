@@ -36,7 +36,7 @@ public class EventConsumer implements CommunityConstant {
 
     //消费3个主题的消息 即发送消息
      @KafkaListener(topics = {TOPIC_COMMENT,TOPIC_LIKE,TOPIC_FOLLOW})
-    public void handCommentMessage(ConsumerRecord record) {
+    public void handleCommentMessage(ConsumerRecord record) {
          if (record == null || record.value() == null) {
              log.error("消息的内容为空！");
              return;
@@ -54,7 +54,7 @@ public class EventConsumer implements CommunityConstant {
          message.setConversationId(event.getTopic());//存的是主题
          message.setCreateTime(new Date());
 
-         //拼接content
+         //聚合消息  content 不方便存的字段，放到content字段
          Map<String, Object> content = new HashMap<>();
          content.put("userId",event.getUserId());//知道了事件是谁触发的
          content.put("entityType",event.getEntityType());//帖子的类型
@@ -66,6 +66,7 @@ public class EventConsumer implements CommunityConstant {
              }
          }
          message.setContent(JSONObject.toJSONString(content));//将content转成json格式的字符串存入message的content中
+         messageService.addMessage(message);
      }
 
 

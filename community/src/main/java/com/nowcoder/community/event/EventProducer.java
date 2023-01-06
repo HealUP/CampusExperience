@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
-* Description: 生产者
+* Description:  封装生产消息的生产者
 * date: 2023/1/5 18:53
  *
 * @author: Deng

@@ -48,15 +48,33 @@ public class MessageService {
         return messageMapper.updateStatus(ids, 1);
     }
 
-
+    /**
+    * Description: 查询最新的通知
+    * date: 2023/1/6 16:01
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
     public Message findLatestNotice(int userId, String topic) {
         return messageMapper.selectLatestNotice(userId, topic);
     }
 
+    /**
+     * 查询通知的数量
+     * @param userId
+     * @param topic
+     * @return
+     */
     public int findNoticeCount(int userId, String topic) {
         return messageMapper.selectNoticeCount(userId, topic);
     }
 
+    /**
+     * 查询未读通知的数量
+     * @param userId
+     * @param topic
+     * @return
+     */
     public int findNoticeUnreadCount(int userId, String topic) {
         return messageMapper.selectNoticeUnreadCount(userId, topic);
     }

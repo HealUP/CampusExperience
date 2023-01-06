@@ -22,7 +22,7 @@ public class FollowService implements CommunityConstant {
     private UserService userService;
 
     /**
-    * Description: 关注的目标
+    * Description: 关注的目标 存到redis
     * date: 2023/1/4 20:44
      *
     * @author: Deng
@@ -47,7 +47,7 @@ public class FollowService implements CommunityConstant {
     }
 
     /**
-    * Description: 取消关注
+    * Description: 取消关注 从redis删除数据
     * date: 2023/1/4 20:44
      *
     * @author: Deng

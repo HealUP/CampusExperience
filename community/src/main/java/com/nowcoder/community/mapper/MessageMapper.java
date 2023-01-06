@@ -28,6 +28,13 @@ public interface MessageMapper {
     // 修改消息的状态
     int updateStatus(List<Integer> ids, int status);
 
+    /**
+    * Description: 系统发的最新消息
+    * date: 2023/1/6 15:56
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
     // 查询某个主题下最新的通知
     Message selectLatestNotice(int userId, String topic);
 

@@ -171,12 +171,13 @@ public class UserController implements CommunityConstant {
         // 关注数量
         long followeeCount = followService.findFolloweeCount(userId, ENTITY_TYPE_USER);
         model.addAttribute("followeeCount", followeeCount);
+
         // 粉丝数量
         long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER, userId);
         model.addAttribute("followerCount", followerCount);
         // 是否已关注
         boolean hasFollowed = false;
-        if (hostHolder.getUser() != null) {
+        if (hostHolder.getUser() != null) {//判断当前用户有没有登录
             hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
         }
         model.addAttribute("hasFollowed", hasFollowed);
