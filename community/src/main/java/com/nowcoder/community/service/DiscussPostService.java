@@ -80,4 +80,26 @@ public class DiscussPostService {
     public int updateCommentCount(int id, int commentCount) {
         return discussPostMapper.updateCommentCount(id, commentCount);
     }
+
+    /**
+    * Description: 更改帖子类型
+    * date: 2023/1/10 17:44
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public int updateType (int id, int type) {
+        return discussPostMapper.updateType(id, type);
+    }
+    /**
+    * Description: 更改帖子状态
+    * date: 2023/1/10 17:45
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+    public int updateStatus (int id, int status) {
+        return discussPostMapper.updateStatus(id, status);
+    }
 }

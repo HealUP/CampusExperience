@@ -76,8 +76,17 @@ public class HomeController implements CommunityConstant {
         return "/error/500";
     }
 
+    /**
+    * Description: 权限不足的时候跳转到此路径的页面
+    * date: 2023/1/10 15:22
+     * 返回的也是404页面
+    * @author: Deng
+    * @since JDK 1.8
+    */
     @RequestMapping(path = "/denied", method = RequestMethod.GET)
     public String getDeniedPage() {
         return "/error/404";
     }
+
+
 }

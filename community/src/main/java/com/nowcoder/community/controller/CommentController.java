@@ -8,6 +8,7 @@ import com.nowcoder.community.service.CommentService;
 import com.nowcoder.community.service.DiscussPostService;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class CommentController implements CommunityConstant {
         comment.setCreateTime(new Date());
         commentService.addComment(comment);
 
-        // 当新增了评论内容之后了，就会触发以下的评论事件
+        // 当新增了评论内容之后，就会触发以下的评论事件
 
         //构造出事件的内容，要让系统id 发送到系统通知里面
         Event event = new Event()
@@ -61,11 +62,10 @@ public class CommentController implements CommunityConstant {
             Comment target = commentService.findCommentById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
         }
-        eventProducer.fireEvent((event));//生产者生产
+        eventProducer.fireEvent(event);//生产者生产
 
-
-        /*
-        *  if (comment.getEntityType() == ENTITY_TYPE_POST) {
+        //评论的时候触发发帖事件 因为评论的数据改变了，帖子也就改变了，所以要重新发帖
+        /*if (comment.getEntityType() == ENTITY_TYPE_POST) {
             // 触发发帖事件
             event = new Event()
                     .setTopic(TOPIC_PUBLISH)
@@ -77,7 +77,8 @@ public class CommentController implements CommunityConstant {
             String redisKey = RedisKeyUtil.getPostScoreKey();
             redisTemplate.opsForSet().add(redisKey, discussPostId);
         }
-        * */
+*/
+
         return "redirect:/discuss/detail/" + discussPostId;
     }
 
