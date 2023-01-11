@@ -173,8 +173,6 @@ public class DiscussPostController implements CommunityConstant {
     }
 
     //置顶 异步请求，页面局部刷新
-
-
     @RequestMapping(path = "/top", method = RequestMethod.POST)
     @ResponseBody
     public String setTop (int id) {

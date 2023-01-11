@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -49,12 +51,16 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
                 User user = userService.findUserById(loginTicket.getUserId());
                 // 在本次请求中持有用户
                 log.debug("本次登录用户信息为{}",user);
-                hostHolder.setUser(user);
+                hostHolder.setUser(user);//存到HostHolder
 
                 // 构建用户认证的结果,并存入SecurityContext,以便于Security进行授权.
+                //token里面存用户，用户密码，用户权限
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                         user, user.getPassword(), userService.getAuthorities(user.getId()));
+                Collection<? extends GrantedAuthority> authorities = userService.getAuthorities(user.getId());
+                log.info("获取用户的权限是：{}",authorities);
                 SecurityContextHolder.setContext(new SecurityContextImpl(authentication));
+                log.info("构建用户的认证结果完成");
             }
         }
         return true;
@@ -73,6 +79,6 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         hostHolder.clear();
-       SecurityContextHolder.clearContext();
+       SecurityContextHolder.clearContext();//清理数据
     }
 }
