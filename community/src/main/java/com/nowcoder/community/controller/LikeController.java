@@ -7,6 +7,7 @@ import com.nowcoder.community.service.LikeService;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,10 @@ public class LikeController implements CommunityConstant {
                     .setData("postId", postId);//点击提示的那句话，点击查看，会跳转到详情页面
             eventProducer.fireEvent(event);//生产消息
         }
+        //点赞的时候也计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, postId);
+
         return CommunityUtil.getJSONString(0, null, map);
     }
 }

@@ -63,7 +63,7 @@ public class ElasticserachTests {
 
     @Test
     public void testInsertList() {
-        discussRepository.saveAll(discussMapper.selectDiscussPosts(3, 0, 10));
+        discussRepository.saveAll(discussMapper.selectDiscussPosts(3, 0, 10, 1));
     }
 
     /**

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -42,13 +43,14 @@ public class HomeController implements CommunityConstant {
 
     @ApiOperation("获取首页内容")
     @RequestMapping(path = "/index",method = RequestMethod.GET)
-    public String getIndexPage(@ApiParam("视图") Model  model, Page page) {
+    public String getIndexPage(@ApiParam("视图") Model  model, Page page,
+                               @RequestParam(name = "orderMode", defaultValue = "0") int orderMode) {
         //方法调用前，SpringMVC会自动实例化Model和Page,并将Page注入Model.
         //所以，在thymeleaf中可以直接访问Page对象中的数据
         page.setRows(discussPostService.findDiscussPostRows(0));
-        page.setPath("/index");
+        page.setPath("/index?orderMode="+orderMode);
 
-        List<DiscussPost> list = discussPostService.findDiscussPosts(0,page.getOffset(),page.getLimit());//前10条数据 优化再替换
+        List<DiscussPost> list = discussPostService.findDiscussPosts(0,page.getOffset(),page.getLimit(),orderMode);//前10条数据 优化再替换
         //再创建一个集合存放map
         List<Map<String,Object>> discussPosts = new ArrayList<>();
         if (list != null){
@@ -69,6 +71,7 @@ public class HomeController implements CommunityConstant {
         }
         //装到model
         model.addAttribute("discussPosts",discussPosts);
+        model.addAttribute("orderMode", orderMode);
         return "/index";
     }
     @RequestMapping(path = "/error", method = RequestMethod.GET)

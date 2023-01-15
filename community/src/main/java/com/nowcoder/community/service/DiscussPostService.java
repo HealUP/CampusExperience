@@ -26,8 +26,8 @@ public class DiscussPostService {
     @Autowired
     private SensitiveFilter sensitiveFilter;
 
-    public List<DiscussPost> findDiscussPosts(int userId,int offset, int limit) {
-        return discussPostMapper.selectDiscussPosts(userId,offset,limit);
+    public List<DiscussPost> findDiscussPosts(int userId,int offset, int limit, int orderMode) {
+        return discussPostMapper.selectDiscussPosts(userId,offset,limit, orderMode);
     }
 
     public  int findDiscussPostRows(int userId) {
@@ -101,5 +101,17 @@ public class DiscussPostService {
     */
     public int updateStatus (int id, int status) {
         return discussPostMapper.updateStatus(id, status);
+    }
+
+    /**
+    * Description: 更新分数
+    * date: 2023/1/15 20:08
+     *
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+    public int updateScore(int id, double score) {
+        return discussPostMapper.updateScore(id, score);
     }
 }

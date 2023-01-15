@@ -152,4 +152,14 @@ public class RedisTests {
         System.out.println(obj);
     }
 
+    /**
+    * Description: 测试redis的两个高级数据类型
+    * date: 2023/1/15 15:00
+     * 1.HyperLoglog
+     * 2.BitMap
+    * @author: Deng
+    * @since JDK 1.8
+    */
+
+
 }

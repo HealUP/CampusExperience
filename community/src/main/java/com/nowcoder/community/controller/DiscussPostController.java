@@ -78,11 +78,11 @@ public class DiscussPostController implements CommunityConstant {
                 .setEntityType(ENTITY_TYPE_POST)
                 .setEntityId(discussPost.getId());
         eventProducer.fireEvent(event);
-
-        // 计算帖子分数
-        String redisKey = RedisKeyUtil.getPostScoreKey();
-        redisTemplate.opsForSet().add(redisKey, discussPost.getId());
 */
+        // 在新增帖子的时候就开始计算帖子分数  放到缓存里
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, discussPost.getId());//set剔除重复数据
+
 
 
         //报错的情况，后面统一处理
@@ -199,6 +199,10 @@ public class DiscussPostController implements CommunityConstant {
                 .setEntityType(ENTITY_TYPE_POST)
                 .setEntityId(id);
         eventProducer.fireEvent(event);
+        //加精的时候，计算帖子的分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, id);
+
         return CommunityUtil.getJSONString(0);
     }
 

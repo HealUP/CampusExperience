@@ -30,15 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
         // 授权
         http.authorizeRequests()
                 .antMatchers(
-                        "/user/setting",
-                        "/user/upload",
-                        "/discuss/add",
-                        "/comment/add/**",
-                        "/letter/**",
-                        "/notice/**",
-                        "/like",
-                        "/follow",
-                        "/unfollow"
+//                        "/user/setting",
+//                        "/user/upload",
+//                        "/discuss/add",
+//                        "/comment/add/**",
+//                        "/letter/**",
+//                        "/notice/**",
+//                        "/like",
+//                        "/follow",
+//                        "/unfollow"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_USER,
@@ -46,16 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_MODERATOR
                 )
                 .antMatchers(
-                        "/discuss/top",
-                        "/discuss/wonderful"
+//                        "/discuss/top",
+//                        "/discuss/wonderful"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_MODERATOR
                 )
                 .antMatchers(
-                        "/discuss/delete",
-                        "/data/**",
-                        "/actuator/**"
+//                        "/discuss/delete",
+//                        "/data/**",//查看网站的UV和DAU数据
+//                        "/actuator/**"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_ADMIN

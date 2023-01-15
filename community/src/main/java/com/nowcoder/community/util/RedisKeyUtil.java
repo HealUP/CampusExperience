@@ -54,6 +54,13 @@ public class RedisKeyUtil {
         return PREFIX_USER + SPLIT + userId;
     }
 
+    /**
+    * Description: 定义key
+    * date: 2023/1/15 18:19
+     * 
+    * @author: Deng
+    * @since JDK 1.8
+    */
     // 单日UV
     public static String getUVKey(String date) {
         return PREFIX_UV + SPLIT + date;
@@ -74,7 +81,7 @@ public class RedisKeyUtil {
         return PREFIX_DAU + SPLIT + startDate + SPLIT + endDate;
     }
 
-    // 帖子分数
+    // 帖子分数 包含了多个指标
     public static String getPostScoreKey() {
         return PREFIX_POST + SPLIT + "score";
     }

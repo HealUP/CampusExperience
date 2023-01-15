@@ -6,7 +6,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
+<!--        <version>2.1.5</version>-->
+        <relativePath/> <!-- lookup
+        parent from repository -->
     </parent>
     <groupId>com.nowcoder.community</groupId>
     <artifactId>community</artifactId>
@@ -54,6 +56,13 @@
 <!--            <artifactId>mybatis</artifactId>-->
 <!--            <version>3.5.6</version>-->
 <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-quartz -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -178,7 +187,6 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
             <version>3.0.4.RELEASE</version>
         </dependency>
-
 
 
 

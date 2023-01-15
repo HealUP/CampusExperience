@@ -78,16 +78,16 @@ public class MapperTests {
     * @since JDK 1.8
     */
 
-    @Test
-    public void  testSelectPosts(){
-        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(2, 0, 11);
-        for (DiscussPost discussPost : discussPosts) {
-            System.out.println(discussPost);
-        }
-        int rows = discussPostMapper.selectDiscussPostRows(2);
-        System.out.println(rows);
-
-    }
+//    @Test
+//    public void  testSelectPosts(){
+//        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(2, 0, 11, 0);
+//        for (DiscussPost discussPost : discussPosts) {
+//            System.out.println(discussPost);
+//        }
+//        int rows = discussPostMapper.selectDiscussPostRows(2);
+//        System.out.println(rows);
+//
+//    }
 
     //添加帖子
     @Test

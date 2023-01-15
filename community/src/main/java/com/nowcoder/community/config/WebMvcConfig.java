@@ -1,6 +1,7 @@
 package com.nowcoder.community.config;
 
 
+import com.nowcoder.community.controller.interceptor.DataInterceptor;
 import com.nowcoder.community.controller.interceptor.LoginRequiredInterceptor;
 import com.nowcoder.community.controller.interceptor.LoginTicketInterceptor;
 import com.nowcoder.community.controller.interceptor.MessageInterceptor;
@@ -30,8 +31,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Resource
     private MessageInterceptor messageInterceptor;
 
-//    @Autowired
-//    private DataInterceptor dataInterceptor;
+    @Autowired
+    private DataInterceptor dataInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

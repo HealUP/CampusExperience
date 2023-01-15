@@ -65,7 +65,7 @@ public class CommentController implements CommunityConstant {
         eventProducer.fireEvent(event);//生产者生产
 
         //评论的时候触发发帖事件 因为评论的数据改变了，帖子也就改变了，所以要重新发帖
-        /*if (comment.getEntityType() == ENTITY_TYPE_POST) {
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
             // 触发发帖事件
             event = new Event()
                     .setTopic(TOPIC_PUBLISH)
@@ -73,11 +73,10 @@ public class CommentController implements CommunityConstant {
                     .setEntityType(ENTITY_TYPE_POST)
                     .setEntityId(discussPostId);
             eventProducer.fireEvent(event);
-            // 计算帖子分数
+            // 评论的时候也计算帖子分数
             String redisKey = RedisKeyUtil.getPostScoreKey();
             redisTemplate.opsForSet().add(redisKey, discussPostId);
         }
-*/
 
         return "redirect:/discuss/detail/" + discussPostId;
     }
