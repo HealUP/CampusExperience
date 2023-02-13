@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 * @author: Deng
 * @since JDK 1.8
 */
-public class CookieUtil {
+public class  CookieUtil {
 
     public  static String getValue(HttpServletRequest request, String name) {
         if (request == null || name == null) {

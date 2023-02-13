@@ -18,6 +18,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+* Description: 一段时间自动计算帖子得分
+* date: 2023/2/13 13:06
+ * 
+* @author: Deng
+* @since JDK 1.8
+*/
 
 @Slf4j
 public class PostScoreRefreshJob implements Job, CommunityConstant {
