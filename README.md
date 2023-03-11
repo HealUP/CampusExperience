@@ -1,4 +1,3 @@
-(https://github.com/HealUP/github-readme-stats)
 # 校园招聘经验交流平台
 A community item
 开发周期：2022.12.21-2023.1.12
