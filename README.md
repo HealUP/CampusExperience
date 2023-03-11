@@ -1,3 +1,4 @@
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=HealUP)](https://github.com/HealUP/github-readme-stats&count_private=true&show_icons=true&theme=radical)
 # 校园招聘经验交流平台
 A community item
 开发周期：2022.12.21-2023.1.12
