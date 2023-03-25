@@ -70,7 +70,7 @@
         </filter>
     </appender>
 
-    <!-- console -->
+    <!--  开发环境  打印控制台console -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
