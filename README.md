@@ -45,7 +45,7 @@
 > 为了便于大家理解，画了每个功能的逻辑图
 - **注册**
 
-![image](https://user-images.githubusercontent.com/72082506/227728468-01e3017e-526a-4aae-a6fa-0879361e80ca.png)
+![image.png](https://s2.loli.net/2023/03/26/kJfFZoS2Tjpt8q7.png)
 
 - **登录、登出**
 
